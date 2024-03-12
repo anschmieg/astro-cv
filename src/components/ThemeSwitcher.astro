@@ -1,0 +1,48 @@
+---
+// Get preferred theme from browser
+import { DAISY_THEME } from "src/config";
+---
+
+<div
+  id="theme-switcher"
+  data-dark-theme={DAISY_THEME.dark}
+  data-light-theme={DAISY_THEME.light}
+  data-default-theme={DAISY_THEME.default}
+  style="display: none; visibility: hidden;"
+>
+</div>
+
+<script is:inline>
+  const getThemePreference = () => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
+    }
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    return prefersDark ? "dark" : "light";
+  };
+
+  const setTheme = (isDark) => {
+    document.documentElement.dataset.theme = isDark
+      ? document.getElementById("theme-switcher").dataset.darkTheme
+      : document.getElementById("theme-switcher").dataset.lightTheme;
+    console.log('Theme set to:', document.documentElement.dataset.theme); // Debug Step
+  };
+
+  setTheme(getThemePreference() === "dark");
+
+  if (typeof localStorage !== "undefined") {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+
+  // Listen for changes in prefers-color-scheme
+  window.matchMedia("(prefers-color-scheme: dark)").addListener(e => {
+    setTheme(e.matches);
+  });
+</script>

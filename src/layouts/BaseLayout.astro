@@ -3,9 +3,10 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SideBar from "../components/SideBar.astro";
+import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 import { ViewTransitions } from "astro:transitions";
 
-import { SITE_TITLE, SITE_DESCRIPTION, TRANSITION_API } from "../config";
+import { SITE_TITLE, SITE_DESCRIPTION, TRANSITION_API, DAISY_THEME } from "../config";
 
 const {
   image,
@@ -18,9 +19,16 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" data-theme="lofi">
+<html lang="en" data-theme="">
   <head>
-    <BaseHead title={title} description={description} image={image} , ogType={ogType} />
+    <ThemeSwitcher />
+    <BaseHead
+      title={title}
+      description={description}
+      image={image}
+      ,
+      ogType={ogType}
+    />
     {TRANSITION_API && <ViewTransitions />}
   </head>
   <body>
@@ -36,6 +44,6 @@ const {
         <Footer />
       </div>
       {includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} />}
-    </div>
+    </div>../components/getPreferredTheme
   </body>
 </html>
