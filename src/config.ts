@@ -9,7 +9,6 @@ export const GENERATE_SLUG_FROM_TITLE = true
 export const TRANSITION_API = true
 
 // Custom
-// save emerald and forest to an array
 export const DAISY_THEME = {
     light: "emerald",
     dark: "dark",

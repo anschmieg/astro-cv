@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+
+// Run `astro dev`, `astro build`, or `astro sync` to generate types for content collections.
+
+import MarkdownPostLayout from "../../layouts/PostLayout.astro";
+
+// https://docs.astro.build/en/tutorials/add-content-collections/
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("cv");
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+let langArray = Astro.request.url.split("/");
+let lang = langArray[langArray.length - 1];
+---
+
+<html>
+  <head>
+    <title>Resume in {lang}</title>
+  </head>
+  <body>
+    <article>
+      <MarkdownPostLayout frontmatter={entry.data}>
+        <Content />
+        {lang.toUpperCase()} Resume
+      </MarkdownPostLayout>
+    </article>
+  </body>
+</html>

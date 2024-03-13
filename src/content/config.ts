@@ -12,11 +12,11 @@ const blogSchema = z.object({
 });
 
 const cvSchema = z.object({
-    title: z.string(),
-    description: z.string(),
-    custom_link_label: z.string(),
+    name: z.string(),
+    summary: z.string().optional(),
+    custom_link_label: z.string().optional(),
     custom_link: z.string().optional(),
-    updatedDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
     pricing: z.string().optional(),
     oldPricing: z.string().optional(),
     badge: z.string().optional(),
@@ -32,5 +32,5 @@ const cvCollection = defineCollection({ schema: cvSchema });
 
 export const collections = {
     'blog': blogCollection,
-    'store': cvCollection
+    'cv': cvCollection
 }
