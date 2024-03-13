@@ -1,8 +1,16 @@
 ---
+import { getCollection } from "astro:content";
+
 const { sideBarActiveItemID } = Astro.props;
 const activeClass = "bg-base-300"; // For primary color replace with `active` class
-const cvPages = ['en', 'fr']; // Add the IDs of your resume pages here
+const cvPages = (await getCollection("cv")).map((page) => page.slug);
 ---
+
+<ul class="menu lang-menu shrink menu-md overflow-y-auto">
+    {cvPages.map(page => (
+        <li><a class={`py-3 text-base ${sideBarActiveItemID === page ? activeClass : ''}`} id={page} href={`/cv/${page}`}>{page.toUpperCase()}</a></li>
+    ))}
+</ul>
 
 <ul class="menu grow shrink menu-md overflow-y-auto">
     <li><a class={`py-3 text-base ${sideBarActiveItemID === 'home' ? activeClass : ''}`} id="home" href="/">Home</a></li>
@@ -10,7 +18,4 @@ const cvPages = ['en', 'fr']; // Add the IDs of your resume pages here
     <li><a class={`py-3 text-base ${sideBarActiveItemID === 'services' ? activeClass : ''}`} id="services" href="/services">Services</a></li>
     <li><a class={`py-3 text-base ${sideBarActiveItemID === 'blog' ? activeClass : ''}`} id="blog" href="/blog/">Blog</a></li>
     <li><a class={`py-3 text-base ${sideBarActiveItemID === 'cv' ? activeClass : ''}`} id="cv" href="/cv">CV</a></li>
-    {cvPages.map(page => (
-        <li><a class={`py-3 text-base ${sideBarActiveItemID === page ? activeClass : ''}`} id={page} href={`/cv/${page}`}>{page.toUpperCase()}</a></li>
-    ))}
 </ul>

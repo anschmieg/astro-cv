@@ -22,17 +22,17 @@ const {
 <html lang="en" data-theme="">
   <head>
     <meta charset="utf-8" />
-    <ThemeSwitcher />
     <BaseHead
-      title={title}
-      description={description}
-      image={image}
-      ,
-      ogType={ogType}
+    title={title}
+    description={description}
+    image={image}
+    ,
+    ogType={ogType}
     />
     {TRANSITION_API && <ViewTransitions />}
   </head>
   <body>
+    <ThemeSwitcher />
     <div class="bg-base-100 drawer lg:drawer-open">
       <input id="my-drawer" type="checkbox" class="drawer-toggle" />
       <div class="drawer-content bg-base-100">

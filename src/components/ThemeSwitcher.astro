@@ -14,9 +14,9 @@ import { DAISY_THEME } from "src/config";
 
 <script is:inline>
   const getThemePreference = () => {
-    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-      return localStorage.getItem("theme");
-    }
+//    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+//      return localStorage.getItem("theme");
+//    }
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     return prefersDark ? "dark" : "light";
   };
