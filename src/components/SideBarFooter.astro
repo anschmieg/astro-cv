@@ -1,31 +1,19 @@
 ---
-import { profile } from "../content/cv/profile"
+import { profileContent } from "./SideBarProfile.astro";
+
+export let socials = ["website", "github", "twitter", "linkedin"];
 ---
 
 <div
-    class="block sticky pointer-events-none bottom-10 bg-base-200 justify-center h-12 [mask-image:linear-gradient(transparent,#000000)]"
+  class="block sticky pointer-events-none bottom-10 bg-base-200 justify-center h-12 [mask-image:linear-gradient(transparent,#000000)]"
 >
 </div>
 
 <div class="social-icons text-2xl px-4 pb-5 pt-1 flex self-center justify-center sticky bottom-0 bg-base-200">
-    { profile.website &&
-        <a href={ profile.website } target="_blank" class="mx-3" aria-label="Website" title="Website">
-            <i class="bi bi-globe"></i>
+    {socials.map((key) => (
+        profileContent[key] && profileContent[key].target &&
+        <a href={profileContent[key].target} target="_blank" class="mx-3" aria-label={key} title={key}>
+            <i class={`bi ${profileContent[key].icon}`}></i>
         </a>
-    }
-    { profile.github && 
-        <a href={ profile.github } target="_blank" class="mx-3" aria-label="Github" title="Github">
-            <i class="bi bi-github"></i>
-        </a>
-    }
-    { profile.twitter && 
-    <a href={ profile.twitter } target="_blank" class="mx-3" aria-label="Twitter" title="Twitter">
-        <i class="bi bi-twitter"></i>
-    </a>
-}
-{ profile.linkedin && 
-    <a href={ profile.linkedin } target="_blank" class="mx-3" aria-label="Linkedin" title="Linkedin">
-        <i class="bi bi-linkedin"></i>
-    </a>
-}
+    ))}
 </div>

@@ -1,37 +1,61 @@
 ---
-import { profile } from "../content/cv/profile";
+import { profile as profileData } from "../content/cv/profile";
+import Profile from "../lib/profileClass";
+import { socials } from "./SideBarFooter.astro";
 
-// iterate over values in profile. If they match a hand-entered URL, replace them with a valid absolute URL.
-for (const key in profile) {
-  if (profile[key].startsWith("/")) {
-    // delete previous value
-    delete profile[key];
-    profile[key] = new URL(profile[key], "https://www.example.com").href;
-  }
+let profile: Profile = new Profile(profileData);
+const profileName = profile.popValue("name");
+const profileTitle = profile.popValue("title");
+
+const icons: {
+  // Type
+  [key: string]: string;
+} = {
+  // Bootstrap icons for each entry
+  birthdate: "bi-asterisk",
+  residence: "bi-house",
+  email: "bi-envelope",
+  phone: "bi-telephone",
+  website: "bi-globe",
+  linkedin: "bi-linkedin",
+  github: "bi-github",
+};
+
+export let profileContent = {};
+
+for (let key in profile.getData()) {
+  let entry = profile.createEntry(key);
+  profileContent[key] = {
+    icon: icons[key],
+    target: entry.linkTarget,
+    text: entry.linkText,
+  };
 }
 ---
 
 <div class="profile-header text-center mb-3">
-{profile.name && <h1 class="mt-3 text-3xl">{profile.name}</h1>}{
-  profile.title && (
-    <h2 class="mt-1 text-2xl font-thin">{profile.title}</h2>
-  )
-}
+  {profileName && <h1 class="mt-3 text-3xl"> {profileName} </h1>}{
+    profileTitle && <h2 class="mt-1 text-2xl font-thin">{profileTitle}</h2>
+  }
 </div>
-<div class="text-left text-md w-full">
-{
-  profile.birthdate && (
-    <p>
-      <i class="bi bi-asterisk mr-3" /> 
-      {profile.birthdate}
-    </p>
-  )
-}{
-    profile.residence && (
-      <p>
-        <i class="bi bi-house mr-3" /> 
-        {profile.residence}
+
+<div class="profile-content text-left text-md w-full">
+  {
+    Object.keys(profileContent).filter(key => !socials.includes(key)).map((key) => (
+      <p class="mb-1">
+        <i class={`bi ${profileContent[key].icon} mr-3`} />
+        {profileContent[key].target ? (
+          <a
+            href={profileContent[key].target}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {profileContent[key].text}
+          </a>
+        ) : (
+          profileContent[key].text
+        )}
       </p>
-    )
-}
+    ))
+  }
 </div>
