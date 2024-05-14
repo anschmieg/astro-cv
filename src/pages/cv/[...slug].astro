@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import BaseHead from "@components/BaseHead.astro";
 
 // Run `astro dev`, `astro build`, or `astro sync` to generate types for content collections.
 
@@ -24,13 +25,30 @@ let lang = langArray[langArray.length - 1];
 
 <html>
   <head>
-    <title>Resume in {lang}</title>
+    <BaseHead title={entry.data.name + " - CV"} description="CV" />
   </head>
   <body>
     <article>
       <MarkdownPostLayout frontmatter={entry.data}>
+        {
+          entry.data.updated && entry.data.locale && (
+            <div class="updated absolute right-3 top-3 text-sm opacity-50">
+              Last updated:
+              {new Date(entry.data.updated).toLocaleDateString(
+                entry.data.locale,
+                { year: "numeric", month: "short", day: "numeric" }
+              )}
+            </div>
+          )
+        }
+        {
+          entry.data.summary && (
+            <div class="summary text-2xl italic font-light">
+              <p>{entry.data.summary}</p>
+            </div>
+          )
+        }
         <Content />
-        {lang.toUpperCase()} Resume
       </MarkdownPostLayout>
     </article>
   </body>

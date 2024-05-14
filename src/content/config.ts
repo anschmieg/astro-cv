@@ -13,15 +13,9 @@ const blogSchema = z.object({
 
 const cvSchema = z.object({
     name: z.string(),
+    updated: z.coerce.date().optional(),
     summary: z.string().optional(),
-    custom_link_label: z.string().optional(),
-    custom_link: z.string().optional(),
-    updatedDate: z.coerce.date().optional(),
-    pricing: z.string().optional(),
-    oldPricing: z.string().optional(),
-    badge: z.string().optional(),
-    checkoutUrl: z.string().optional(),
-    heroImage: z.string().optional(),
+    locale: z.string().optional(),
 });
 
 export type BlogSchema = z.infer<typeof blogSchema>;

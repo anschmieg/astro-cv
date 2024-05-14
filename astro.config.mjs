@@ -2,7 +2,8 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
-import tailwindcssNesting from "tailwindcss/nesting";
+import remarkSectionize from "remark-sectionize";
+import remarkHeadingId from "remark-heading-id";
 
 // https://astro.build/config
 export default defineConfig({
@@ -11,11 +12,7 @@ export default defineConfig({
   buildOptions: {
     publicCSS: true,
   },
-  vite: {
-    css: {
-      postcss: {
-        plugins: [tailwindcssNesting()],
-      },
-    },
+  markdownOptions: {
+    remarkPlugins: [remarkSectionize, remarkHeadingId],
   },
 });

@@ -1,77 +1,13 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "./hover.css";
 
 :root {
-  --shadow-color: color-mix(in srgb, currentColor 80%, transparent);
+  --shadow-color: color-mix(in srgb, currentColor 50%, transparent);
 }
 
 .time-line-container > div:last-child .education__time > .education__line {
   display: none;
 }
 
-/* Link hover animation */
-
-.profile-content a,
-.drawer-content a {
-  transition: all 0.15s ease-in-out;
-}
-
-.profile-content a:hover,
-.drawer-content a:hover {
-  display: inline-block;
-  transform: translateY(-7%);
-  transition: all 0.15s ease-in-out;
-  filter: contrast(2);
-}
-
-.social-icons i {
-  position: relative;
-  display: block;
-  transition: all 0.15s ease-in-out;
-}
-
-.social-icons i:hover {
-  transform: translateY(-7%) scale(1.14);
-  transition: all 0.15s ease-in-out;
-}
-
-.social-icons i::after {
-  content: "";
-  position: absolute;
-  bottom: 0%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0%;
-  height: 0%;
-  border-radius: 50%;
-  box-shadow: 0px 7px 5px var(--shadow-color);
-  transition: all 0.15s ease-in-out;
-}
-
-.profile-content a::after,
-.drawer-content a::after {
-  content: "";
-  position: absolute;
-  bottom: 0%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0%;
-  height: 0%;
-  border-radius: 50%;
-  box-shadow: 0px 7px 5px var(--shadow-color);
-  transition: all 0.15s ease-in-out;
-}
-
-.social-icons i:hover::after {
-  width: 95%;
-  height: 8%;
-  transition: all 0.15s ease-in-out;
-}
-
-.drawer-content a:hover::after,
-.profile-content a:hover::after {
-  width: 40%;
-  height: 4%;
-  transition: all 0.15s ease-in-out;
-}
